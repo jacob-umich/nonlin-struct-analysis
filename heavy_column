@@ -1,0 +1,137 @@
+# Created by Octave 9.1.0, Thu Apr 04 09:21:51 2024 GMT <unknown@Jacob-laptop>
+# name: ans
+# type: scalar
+-2
+
+
+# name: coord
+# type: matrix
+# rows: 2
+# columns: 2
+ 0 0
+ 0 10
+
+
+# name: count
+# type: scalar
+5
+
+
+# name: dofnum
+# type: matrix
+# rows: 2
+# columns: 2
+ 2 4
+ 3 1
+
+
+# name: heat
+# type: matrix
+# rows: 0
+# columns: 0
+
+
+# name: i
+# type: sq_string
+# elements: 1
+# length: 1
+Y
+
+
+# name: idbc
+# type: matrix
+# rows: 3
+# columns: 1
+ 1
+ 2
+ 1
+
+
+# name: j
+# type: scalar
+2
+
+
+# name: loading
+# type: matrix
+# rows: 3
+# columns: 1
+ 2
+ 0
+ -250
+
+
+# name: mload
+# type: matrix
+# rows: 2
+# columns: 1
+ 1
+ 2
+
+
+# name: nbc
+# type: scalar
+1
+
+
+# name: ndof
+# type: scalar
+4
+
+
+# name: nfdof
+# type: scalar
+1
+
+
+# name: nload
+# type: scalar
+1
+
+
+# name: nmat
+# type: scalar
+1
+
+
+# name: nmemld
+# type: scalar
+1
+
+
+# name: nnod
+# type: scalar
+2
+
+
+# name: nsup
+# type: scalar
+2
+
+
+# name: prop
+# type: matrix
+# rows: 3
+# columns: 1
+ 29000
+ 10
+ 210
+
+
+# name: supp
+# type: matrix
+# rows: 2
+# columns: 2
+ 1 1
+ 1 0
+
+
+# name: support
+# type: matrix
+# rows: 3
+# columns: 2
+ 1 2
+ 1 1
+ 1 0
+
+
