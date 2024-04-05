@@ -99,6 +99,10 @@ Kss = K((nfdof+1):ndof, (nfdof+1):ndof);
 delta = zeros(nfdof,1);
 deltas = zeros((ndof-nfdof),1);
 
+% begin solution
+
+solver
+
 % calculate the global displacements
 
      delta = Kff\P;
