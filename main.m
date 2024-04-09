@@ -12,6 +12,8 @@
 % The functions estiff and etran are called to calculate the element stiffness
 % matrix [elk] and the transformation matrix [gamma], respectively.
 
+addpath classes
+
 % clear all variables option
 
 i = [];

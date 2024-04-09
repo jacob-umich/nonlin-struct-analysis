@@ -1,3 +1,4 @@
+function[K]=get_stiffness[coord, dofnum ]
 K = zeros(ndof,ndof);
 
 for i = 1:nbc
@@ -9,7 +10,6 @@ for i = 1:nbc
     y2 = coord(2,idbc(2,i));
 
     [l,phi] = meminf(x1,y1,x2,y2);
-
 
   % calculate the transformation matrix
     gamma = etran(phi);

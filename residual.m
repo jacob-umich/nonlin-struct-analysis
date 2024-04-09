@@ -1,1 +1,1 @@
-for i=0:nbc
+get_stiffness
