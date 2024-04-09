@@ -1,9 +1,6 @@
 K = zeros(ndof,ndof);
 
 for i = 1:nbc
-    e = prop(1, idbc(3,i));
-    a = prop(2, idbc(3,i));
-    Iz = prop(3, idbc(3,i));
 
   % get nodal coordinates
     x1 = coord(1,idbc(1,i));
@@ -13,11 +10,23 @@ for i = 1:nbc
 
     [l,phi] = meminf(x1,y1,x2,y2);
 
-  % calculate element stiffnes matrix
-    elk = estiff(e,a,Iz,l);
 
   % calculate the transformation matrix
     gamma = etran(phi);
+
+    node_i= idbc(1,i)
+    node_j= idbc(2,i)
+    elem_delta = delta([dofnum(1,node_i),dofnum(2,node_i),dofnum(1,node_2),dofnum(1,node_2)])
+    delta_local = gamma*elem_delta
+    strain = delta_local[3]-delta_local[1]/l
+
+    e_base = prop(1, idbc(3,i));
+    e = get_moi(e_base,strain)
+    a = prop(2, idbc(3,i));
+    Iz = prop(3, idbc(3,i));
+
+  % calculate element stiffnes matrix
+    elk = estiff(e,a,Iz,l);
 
   % calculate the global stiffness matrix
     [Ke] =  [gamma]' * [elk] * [gamma];

@@ -36,10 +36,10 @@ for i = 1:nmemld
 
 % define PFele
 
-PFele = [-(mload(2,i)*meml)/2;
+PFele = [(mload(2,i)*meml)/2;
          0;
 
-         -(mload(2,i)*meml)/2;
+         (mload(2,i)*meml)/2;
          0];
 
 % convert the element loads to global coordinates
@@ -47,7 +47,7 @@ PFele = [-(mload(2,i)*meml)/2;
 
 gamma = etran(phi);
 PFeg = gamma' * PFele;
-
+disp(PFeg)
 % assemble in PF matrix
 
 for j = 1:2
@@ -129,7 +129,7 @@ end   % check if there is thermal gradients
 % factor in PF array into the Ptotal matrix
 
 format long
-ptotalf = ptotal - PF;
+ptotalf = ptotal + PF;
 
 % partition the ptotalf vector
 

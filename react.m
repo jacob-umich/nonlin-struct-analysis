@@ -6,7 +6,7 @@
 % calculate the reactios and store them in the array Ps
 
 
-Ps = Ksf * delta + Kss * deltas - supload;
+Ps = Ksf * delta + Kss * deltas - PF;
 
 
 i = input('would you like to find a reaction? [Y]','s');

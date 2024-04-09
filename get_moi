@@ -1,0 +1,3 @@
+function [e] = get_moi(e_base, strain)
+
+e = e_base
