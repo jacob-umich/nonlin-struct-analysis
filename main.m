@@ -30,15 +30,6 @@ i = input('Would you like to clear all variables [N] ','s');
 
 pre
 
-% calculate the load vector
-
-pnode4;
-
-% initialize the diplacement vector
-
-delta = zeros(nfdof,1);
-deltas = zeros((ndof-nfdof),1);
-
 % begin solution
 
 solver

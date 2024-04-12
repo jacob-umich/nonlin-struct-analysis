@@ -2,7 +2,7 @@ classdef Element < handle
 	properties(SetAccess=public)
 		nodes= {}
 		material
-		loads
+		loads=0
 		dofs
 		k
 		original_length
@@ -68,7 +68,7 @@ classdef Element < handle
 		end
 		function force = get_internal(obj)
 			strain = obj.get_strain();
-			force = [-strain*obj.material.area;0;strain*obj.materail.area;0];
+			force = [-strain*obj.material.area;0;strain*obj.material.area;0];
 		end
   	end
 end

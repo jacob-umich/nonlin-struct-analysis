@@ -15,7 +15,7 @@ classdef Material < handle
 			obj.material_func=material_func;
 		end
 		function moe = get_moe(obj,strain);
-			moe = obj.material_func(strain);
+			moe = obj.material_func(strain,obj.e_base);
 		end
 	end
 end

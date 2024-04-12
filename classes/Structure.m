@@ -8,6 +8,7 @@ classdef Structure < handle
 		n_free
 		n_fix
 		n_dof
+		orig_pos
 	end
 	methods
 		function obj = Structure(nodes,elements)
@@ -46,6 +47,15 @@ classdef Structure < handle
 
 			end 
 			obj.n_dof = dof_counter-1;
+			
+			obj.orig_pos = zeros(obj.n_dof,1);
+			for i=1:numel(obj.nodes) 
+				node = obj.nodes{i};
+				dof = node.dof;
+				obj.orig_pos(dof)=node.pos';
+			end
+
+
 		end
 
 
@@ -74,12 +84,14 @@ classdef Structure < handle
 		end
 
 		function update_disp(obj,pos)
+			pos_all = zeros(obj.n_dof,1);
+			pos_all(1:obj.n_free)=pos;
 			for i=1:numel(obj.nodes)
 				node=obj.nodes{i};
 				dof = node.dof;
-				node.pos = reshape(pos[dof,1],1,2);
-				disp(node.pos)
+				node.pos = reshape(pos_all(dof,1),1,2);
 			end
+
 		end
 
 		function F = get_internal_force(obj)
@@ -89,6 +101,14 @@ classdef Structure < handle
 				dofs = elem.dofs;
 				f = elem.get_etran()'*elem.get_internal();
 				F(dofs,1)=F(dofs,1)+f;
+			end
+		end
+
+		function reset_pos(obj)
+			for i=1:numel(obj.nodes)
+				node = obj.nodes{i};
+				dof = node.dof;
+				node.pos = reshape(obj.orig_pos(dof),2);
 			end
 		end
 	end
