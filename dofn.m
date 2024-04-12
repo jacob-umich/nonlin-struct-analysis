@@ -20,12 +20,12 @@ i = 0; j = 0;
 % assign free dof numbers to unsuported nodes
 
 for i= 1:nnod
-   if(supp(:,i) == zeros(2,1))
-     count = count + 1; 
-     dofnum(1,i) = count;
-     count = count + 1; 
-     dofnum(2,i) = count;
-   end
+    if( == zeros(2,1))
+      count = count + 1; 
+      dofnum(1,i) = count;
+      count = count + 1; 
+      dofnum(2,i) = count;
+    end
 end
 
 count= count+1;

@@ -47,7 +47,6 @@ PFele = [(mload(2,i)*meml)/2;
 
 gamma = etran(phi);
 PFeg = gamma' * PFele;
-disp(PFeg)
 % assemble in PF matrix
 
 for j = 1:2

@@ -109,7 +109,8 @@ i = input('Would you like to retrieve a stored structure? [Y] ','s');
 	end
 
 % calculate the global degree of freedom numbers
-    dofn
+	strucutre = Structure(node_list,elem_list);
+
 
 % give option for settlement
 %   settle
