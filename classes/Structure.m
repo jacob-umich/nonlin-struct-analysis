@@ -79,9 +79,19 @@ classdef Structure < handle
 			for i=1:numel(obj.elements)
 				elem = obj.elements{i};
 				dof = elem.dofs;
-				K(dof,dof)=K(dof,dof)+elem.get_gstiffness();
+				K(dof,dof)=K(dof,dof)+elem.get_g_e_stiffness();
 			end
 		end
+
+		function K = get_tan_stiffness(obj)
+			K=obj.get_stiffness();
+			for i=1:numel(obj.elements)
+				elem = obj.elements{i};
+				dof = elem.dofs;
+				K(dof,dof)=K(dof,dof)+elem.get_geometric_stiffness();
+			end
+		end
+
 
 		function update_disp(obj,pos)
 			pos_all = zeros(obj.n_dof,1);

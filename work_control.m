@@ -11,7 +11,7 @@ function delta = work_control(structure)
     d_lambda=0.2;
 
     % establising originial stiffness matrix to measure nonlinearity
-    k_orig=structure.get_stiffness()(1:structure.n_free,1:structure.n_free);
+    k_orig=structure.get_tan_stiffness()(1:structure.n_free,1:structure.n_free);
 
     % setting initial stiffness matrix
     k_free=k_orig;
@@ -40,7 +40,7 @@ function delta = work_control(structure)
             R=(P_total*(lambda+lambda_i))(1:structure.n_free,1)-F;
 
             % compute stiffness for step j+1
-            k_free=structure.get_stiffness()(1:structure.n_free,1:structure.n_free);
+            k_free=structure.get_tan_stiffness()(1:structure.n_free,1:structure.n_free);
             % stop iteration if residual is small
             if max(abs(R))<1e-3
                 break

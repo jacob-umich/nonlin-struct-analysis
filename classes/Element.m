@@ -43,7 +43,7 @@ classdef Element < handle
 
 			stiff(4,:) = [0, 0,0,0];
 		end
-		function stiff = get_gstiffness(obj)
+		function stiff = get_g_e_stiffness(obj)
 			stiff=obj.get_stiffness();
 			etran = obj.get_etran();
 			stiff = etran'*stiff*etran;
@@ -72,6 +72,17 @@ classdef Element < handle
 			strain = obj.get_strain();
 			result = strain*obj.material.area*obj.material.get_moe(strain);
 			force = [-result;0;result;0];
+		end
+
+		function k_g = get_geometric_stiffness(obj)
+			T = obj.get_internal()(3);
+			cur_len = obj.get_elem_len();
+			k_g = T/cur_len*[
+				1,0,-1,0;
+				0,1,0,-1;
+				-1,0,1,0;
+				0,-1,0,1;
+			];
 		end
   	end
 end
