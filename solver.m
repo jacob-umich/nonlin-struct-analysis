@@ -14,7 +14,7 @@ while (cond)
   end
 end
 if (i==1)
-  nraph;
+  delta_all = nraph(structure);
 elseif (i==2)
   delta_all = work_control(structure);
 elseif (i==3)

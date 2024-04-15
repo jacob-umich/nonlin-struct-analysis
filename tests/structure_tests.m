@@ -95,7 +95,19 @@ function wc_arch()
     disp("test passed")
 end
 
+function nr_arch()
+    z = dbstack;
+    a = z(1).name;
+    disp(["starting ",a])
+    arch = make_arch();
+    delta = nraph(arch);
+    disp(delta);
+    assert(abs(delta(2)-(-2.4383e-4))/abs(2.4383e-4)<1e-4);
+    disp("test passed")
+end
+
 struct_loads()
 stiffness()
 linear_arch()
 wc_arch()
+nr_arch()
