@@ -21,24 +21,23 @@ function delta = work_control(structure)
 
     while true
         % define R for first iteration
-        R = zeros(structure.n_dof,1);
-        for j=1:2
+        R = zeros(structure.n_free,1);
+        lambda_i=0;
+        for j=1:50
 
             % update the increment lambda for the jth iteration
             lambda_i=lambda_i+d_lambda;
-
             % compute delta j
-            delta_free_j=k_free\(P_total*d_lambda+R)(1:structure.n_free);
+            delta_free_j=k_free\(P_total(1:structure.n_free,1)*d_lambda+R)(1:structure.n_free);
             % get total displacement at step j
             delta_free=delta_free+delta_free_j;
-            structure.update_disp(delta_free);
+            structure.update_disp(delta_free_j);
 
             % get internal force for step j
-            F = structure.get_internal_force()(structure.n_free,1);
-            disp(F)
+            F = structure.get_internal_force()(1:structure.n_free,1);
 
             % compute residual for step j
-            R=P_total*(lambda+lambda_i)-F;
+            R=(P_total*(lambda+lambda_i))(1:structure.n_free,1)-F;
 
             % compute stiffness for step j+1
             k_free=structure.get_stiffness()(1:structure.n_free,1:structure.n_free);
@@ -55,9 +54,8 @@ function delta = work_control(structure)
         lambda = lambda+lambda_i;
 
         % compute lambda for next increment
-        S =P_total'*k_orig*P_total/(P_total'*k_free*P_total)
-        d_lambda=0.2*S
-
+        S =(P_total(1:structure.n_free)'*k_orig*P_total(1:structure.n_free))/(P_total(1:structure.n_free)'*k_free*P_total(1:structure.n_free));
+        d_lambda=0.2*S;
         %stop condition
         if lambda>=1 || S<0
             break
@@ -65,7 +63,7 @@ function delta = work_control(structure)
 
     end
     % end result is displacments. structure object now has new displacments
-    delta = zeros(structure.n_dof,1)
-    delta(structure.n_free)=delta_free
+    delta = zeros(structure.n_dof,1);
+    delta(1:structure.n_free)=delta_free;
 endfunction
 

@@ -6,12 +6,14 @@ classdef Element < handle
 		dofs
 		k
 		original_length
+		orig_pos
 	end
 	methods
 		function obj = Element(node_i,node_j,material)
 			obj.nodes = {node_i,node_j};
 			obj.material = material;
 			obj.original_length=obj.get_elem_len();
+			obj.orig_pos=obj.get_coords();
 		end
 		function elem_len = get_elem_len(obj)
 			elem_len = sqrt(sum((obj.nodes{2}.pos-obj.nodes{1}.pos).^2));
@@ -62,13 +64,14 @@ classdef Element < handle
 			coords = reshape(displ,4,1);
 		end
 		function strain = get_strain(obj)
-			coords = obj.get_coords();
-			local_pos = obj.get_etran()*coords;
+			delta = obj.get_coords()-obj.orig_pos;
+			local_pos = obj.get_etran()*delta;
 			strain=(local_pos(3)-local_pos(1))/obj.original_length;
 		end
 		function force = get_internal(obj)
 			strain = obj.get_strain();
-			force = [-strain*obj.material.area;0;strain*obj.material.area;0];
+			result = strain*obj.material.area*obj.material.get_moe(strain);
+			force = [-result;0;result;0];
 		end
   	end
 end

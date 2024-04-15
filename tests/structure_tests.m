@@ -82,7 +82,6 @@ function wc_arch()
     disp(["starting ",a])
     arch = make_arch();
     delta = work_control(arch);
-    disp(delta)
     assert(abs(delta(2)-(-2.4383e-4))/abs(2.4383e-4)<1e-4)
     disp("test passed")
 end
