@@ -23,12 +23,16 @@ function delta = work_control(structure)
         % define R for first iteration
         R = zeros(structure.n_free,1);
         lambda_i=0;
+
+        % 50 is an arbitrary stopping point.
         for j=1:50
 
-            % update the increment lambda for the jth iteration
+            % update the lambda for the ith increment with the jth iteration
             lambda_i=lambda_i+d_lambda;
+
             % compute delta j
-            delta_free_j=k_free\(P_total(1:structure.n_free,1)*d_lambda+R)(1:structure.n_free);
+            delta_free_j=k_free\((P_total(1:structure.n_free,1)*d_lambda)+R)(1:structure.n_free);
+
             % get total displacement at step j
             delta_free=delta_free+delta_free_j;
             structure.update_disp(delta_free_j);
@@ -40,24 +44,29 @@ function delta = work_control(structure)
             R=(P_total*(lambda+lambda_i))(1:structure.n_free,1)-F;
 
             % compute stiffness for step j+1
-            k_free=structure.get_tan_stiffness()(1:structure.n_free,1:structure.n_free);
+            k_free= structure.get_tan_stiffness()(1:structure.n_free,1:structure.n_free);
+
             % stop iteration if residual is small
             if max(abs(R))<1e-3
                 break
             end
 
             % compute d_lambda for step j+1
-            d_lambda=-P_total(1:structure.n_free)'*(k_free\R(1:structure.n_free))/(P_total(1:structure.n_free)'*(k_free\P_total(1:structure.n_free)));
+            dDelta_double_bar = (k_free\R(1:structure.n_free));
+            dDelta_bar = (k_free\P_total(1:structure.n_free));
+            numerator = P_total(1:structure.n_free)' *dDelta_double_bar;
+            denominator = P_total(1:structure.n_free)'*dDelta_bar;
+            d_lambda=-numerator/denominator;
 
         end
         % update accumulated lambda
         lambda = lambda+lambda_i;
 
-        % compute lambda for next increment
-        S =(P_total(1:structure.n_free)'*k_orig*P_total(1:structure.n_free))/(P_total(1:structure.n_free)'*k_free*P_total(1:structure.n_free));
+        % compute dlambda for next increment
+        S = (P_total(1:structure.n_free)'*k_orig*P_total(1:structure.n_free))/(P_total(1:structure.n_free)'*k_free*P_total(1:structure.n_free));
         d_lambda=0.2*S;
-        %stop condition
-        if lambda>=1 || S<0
+        %stop condition .arbitrarily stopping slightly after post peak response.
+        if lambda>=1 || S<-0.5
             break
         end
 

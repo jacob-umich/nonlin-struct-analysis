@@ -20,7 +20,7 @@ elseif (i==2)
 elseif (i==3)
   [P,PF]=structure.get_loads()
   k_free = structure.get_stiffness()(1:structure.n_free,1:structure.n_free);
-  delta_free=k_free\(P+PF)(1:arch.n_free);
+  delta_free=k_free\(P+PF)(1:structure.n_free);
   structure.update_disp(delta_free);
 end
 

@@ -5,9 +5,9 @@ function node_gen_test()
     z = dbstack;
     a = z(1).name;
     disp(["starting ",a])
-    pos = [1,1];
+    pos = [2,1];
     n = Node(pos);
-    assert (n.pos(1)==1)
+    assert (n.pos(1)==2)
     disp("test passed")
 end
 

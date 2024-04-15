@@ -1,6 +1,7 @@
 addpath ..\classes
 addpath ..
-val = debug_on_interrupt(1);
+
+
 % generate one node
 function struct_loads()
     z = dbstack;
@@ -17,8 +18,11 @@ function struct_loads()
     el.set_loads(-2);
     elems = {el};
     s1 = Structure(nodes,elems);
+
     n.set_load([10,0]);
+
     [loads, pe] = s1.get_loads();
+
     assert(loads(1)==10)
     disp("test passed")
 end
@@ -56,7 +60,7 @@ function arch = make_arch()
     a.set_fixity(a_fix);
     c.set_fixity(c_fix);
     b.set_load([0,-10]);
-    mat_func = @(x,e) e;
+    mat_func = @(strain,e_base) e_base;
     mat = Material(1,29000,10,100,mat_func);
     ab = Element(a,b,mat);
     bc = Element(b,c,mat);
@@ -69,10 +73,14 @@ function linear_arch()
     disp(["starting ",a])
     arch = make_arch();
     [P,PF]=arch.get_loads();
+
     k_free = arch.get_stiffness()(1:arch.n_free,1:arch.n_free);
+
     delta_free=k_free\(P+PF)(1:arch.n_free);
-    arch.update_disp(delta_free);
+
+    % arch.update_disp(delta_free);
     assert(abs(delta_free(2)-(-2.4383e-4))/abs(2.4383e-4)<1e-4)
+
     disp("test passed")
 end
 
@@ -82,11 +90,12 @@ function wc_arch()
     disp(["starting ",a])
     arch = make_arch();
     delta = work_control(arch);
-    assert(abs(delta(2)-(-2.4383e-4))/abs(2.4383e-4)<1e-4)
+    disp(delta);
+    assert(abs(delta(2)-(-2.4383e-4))/abs(2.4383e-4)<1e-4);
     disp("test passed")
 end
 
 struct_loads()
 stiffness()
 linear_arch()
-wc_arch
+wc_arch()

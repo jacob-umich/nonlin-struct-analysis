@@ -49,7 +49,7 @@ classdef Element < handle
 			stiff = etran'*stiff*etran;
 		end
 		function loads = get_nodal_loads(obj)
-			elem_len = obj.get_elem_len();
+			elem_len = obj.original_length;
 
 			loads = [(obj.loads*elem_len)/2;
 					0;
@@ -57,10 +57,21 @@ classdef Element < handle
 					0];
 		end
 		function get_dofs(obj)
-			obj.dofs = [obj.nodes{1}.dof(1), obj.nodes{1}.dof(2), obj.nodes{2}.dof(1), obj.nodes{2}.dof(2)];
+			obj.dofs = [
+				obj.nodes{1}.dof(1),
+				obj.nodes{1}.dof(2),
+				obj.nodes{2}.dof(1), 
+				obj.nodes{2}.dof(2)
+			];
 		end
 		function coords = get_coords(obj)
-			displ = [obj.nodes{1}.pos(1),obj.nodes{1}.pos(2),obj.nodes{2}.pos(1),obj.nodes{2}.pos(2)];
+			displ = [
+				obj.nodes{1}.pos(1),
+				obj.nodes{1}.pos(2),
+				obj.nodes{2}.pos(1),
+				obj.nodes{2}.pos(2)
+			];
+
 			coords = reshape(displ,4,1);
 		end
 		function strain = get_strain(obj)
@@ -70,7 +81,7 @@ classdef Element < handle
 		end
 		function force = get_internal(obj)
 			strain = obj.get_strain();
-			result = strain*obj.material.area*obj.material.get_moe(strain);
+			result = strain * (obj.material.area) * (obj.material.get_moe(strain));
 			force = [-result;0;result;0];
 		end
 

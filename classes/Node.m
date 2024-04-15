@@ -7,8 +7,8 @@ classdef Node < handle
 	end
 
 	methods
-		function obj = Node(position)
-			obj.pos=position;
+		function obj = Node(coord)
+			obj.pos=coord;
 		end
 		function set_fixity(obj,fixity)
 			obj.fixity = fixity;

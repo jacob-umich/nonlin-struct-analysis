@@ -32,7 +32,12 @@ classdef Structure < handle
 					dof_counter=dof_counter+1;
 				end
 			end
+
+			% assign dof to fixed dof in mixed fixity node
+			
+
 			obj.n_free = dof_counter-1;
+
 			for i=1:numel(obj.nodes) 
 				mask = obj.nodes{i}.fixity!=0;
 				if (all(mask))
@@ -42,13 +47,17 @@ classdef Structure < handle
 				end
 			end
 			obj.n_fix = dof_counter-1-obj.n_free;
+
+			% save degree of freedoms for elements
 			for i=1:numel(obj.elements)
 				obj.elements{i}.get_dofs();
 
 			end 
 			obj.n_dof = dof_counter-1;
 			
+			% saving original position of structure
 			obj.orig_pos = zeros(obj.n_dof,1);
+
 			for i=1:numel(obj.nodes) 
 				node = obj.nodes{i};
 				dof = node.dof;
@@ -85,6 +94,8 @@ classdef Structure < handle
 
 		function K = get_tan_stiffness(obj)
 			K=obj.get_stiffness();
+
+			% getting geometric stiffness matrix
 			for i=1:numel(obj.elements)
 				elem = obj.elements{i};
 				dof = elem.dofs;
@@ -94,12 +105,15 @@ classdef Structure < handle
 
 
 		function update_disp(obj,pos)
+			% modifying the shape of the position vector to include all dof
 			pos_all = zeros(obj.n_dof,1);
+
 			pos_all(1:obj.n_free)=pos;
+
 			for i=1:numel(obj.nodes)
 				node=obj.nodes{i};
 				dof = node.dof;
-				node.pos = node.pos+reshape(pos_all(dof,1),1,2);
+				node.pos = node.pos + reshape(pos_all(dof,1),1,2);
 			end
 
 		end
