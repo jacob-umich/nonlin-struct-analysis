@@ -4,9 +4,6 @@ addpath ..
 
 % generate one node
 function struct_loads()
-    z = dbstack;
-    a = z(1).name;
-    disp(["starting ",a])
     pos = [0,0];
     pos2 = [0,1];
     n=Node(pos);
@@ -24,13 +21,30 @@ function struct_loads()
     [loads, pe] = s1.get_loads();
 
     assert(loads(1)==10)
-    disp("test passed")
+end
+
+function mixed_fixity()
+
+    pos = [0,0];
+    pos2 = [0,1];
+    n=Node(pos);
+    n2=Node(pos2);
+    n.fixity = [1,1];
+    n2.fixity = [1,0];
+    nodes = {n,n2};
+    mat_func = @(x,e) e;
+    mat1 = Material(1,1,1,1,mat_func);
+    el = Element(n,n2,mat1);
+    el.set_loads(-2);
+    elems = {el};
+    s1 = Structure(nodes,elems);
+    n.set_load([10,0]);
+    assert(s1.n_free==1)
+    assert(s1.n_dof==4)
+
 end
 
 function stiffness()
-    z = dbstack;
-    a = z(1).name;
-    disp(["starting ",a])
     pos = [0,0];
     pos2 = [0,1];
     n=Node(pos);
@@ -45,7 +59,6 @@ function stiffness()
     n.set_load([10,0]);
     K = s1.get_stiffness();
     assert(abs(K(4,4)-1)<1e-4)
-    disp("test passed")
 end
 
 function arch = make_arch()
@@ -68,9 +81,6 @@ function arch = make_arch()
 end
 
 function linear_arch()
-    z = dbstack;
-    a = z(1).name;
-    disp(["starting ",a])
     arch = make_arch();
     [P,PF]=arch.get_loads();
 
@@ -80,34 +90,26 @@ function linear_arch()
 
     % arch.update_disp(delta_free);
     assert(abs(delta_free(2)-(-2.4383e-4))/abs(2.4383e-4)<1e-4)
-
-    disp("test passed")
 end
 
 function wc_arch()
-    z = dbstack;
-    a = z(1).name;
-    disp(["starting ",a])
     arch = make_arch();
     delta = work_control(arch);
-    disp(delta);
     assert(abs(delta(2)-(-2.4383e-4))/abs(2.4383e-4)<1e-4);
-    disp("test passed")
 end
 
 function nr_arch()
-    z = dbstack;
-    a = z(1).name;
-    disp(["starting ",a])
     arch = make_arch();
     delta = nraph(arch);
-    disp(delta);
     assert(abs(delta(2)-(-2.4383e-4))/abs(2.4383e-4)<1e-4);
-    disp("test passed")
 end
 
-struct_loads()
-stiffness()
-linear_arch()
-wc_arch()
-nr_arch()
+
+simple_test({
+    @struct_loads,
+    @stiffness,
+    @mixed_fixity,
+    @linear_arch,
+    @wc_arch,
+    @nr_arch,
+})

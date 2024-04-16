@@ -32,11 +32,21 @@ classdef Structure < handle
 					dof_counter=dof_counter+1;
 				end
 			end
+			obj.n_free = dof_counter-1;
+
 
 			% assign dof to fixed dof in mixed fixity node
+			for i=1:numel(obj.nodes)
+				mask = obj.nodes{i}.fixity!=0;
+				if (any(mask)&& !all(mask))
+					% n_free = length(obj.nodes(i).fixity(!mask))
+					obj.nodes{i}.dof(mask)=dof_counter;
+					dof_counter=dof_counter+1;
+				end
+			end
+
 			
 
-			obj.n_free = dof_counter-1;
 
 			for i=1:numel(obj.nodes) 
 				mask = obj.nodes{i}.fixity!=0;
