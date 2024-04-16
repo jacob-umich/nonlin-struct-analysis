@@ -3,10 +3,12 @@
 % nodal displacements and the K matrix.  The user is prompted
 % for the node they would like to see displayed.
 
-% calculate the reactios and store them in the array Ps
+% calculate the reactions and store them in the array Ps
 
+[P,PF] = strucutre.get_loads();
+F = strucutre.get_internal()
 
-Ps = Ksf * delta + Kss * deltas - PF;
+Ps = F - PF;
 
 
 i = input('would you like to find a reaction? [Y]','s');
@@ -15,17 +17,18 @@ while (isempty(i) || (i == 'Y') || (i == 'y'))
 
    rnode = input('enter the supported node you would like displayed ---> ');
    fprintf('\n')
+   node = structure.nodes{rnode}
 
-   if ((supp(1,rnode) == 0)&&(supp(2,rnode)==0))
+   if ((node.fixity(1) == 0)&&(node.fixity(2)==0))
       fprintf('\nthis is an unsupported node\n\n');
    else
-   if (supp(1,rnode) ~= 0)
-    fprintf('the x reaction at node %g = %g\n',rnode,Ps(dofnum(1,rnode)-nfdof));
+   if (node.fixity(1) ~= 0)
+    fprintf('the x reaction at node %g = %g\n',rnode,Ps(node.dof(1)));
    end
-   if (supp(2,rnode) ~= 0)
-    fprintf('the y reaction at node %g = %g\n',rnode,Ps(dofnum(2,rnode)-nfdof));
+   if (node.fixity(2) ~= 0)
+    fprintf('the y reaction at node %g = %g\n',rnode,Ps(node.dof(2)));
    end
-   end
+end
 i = input('would you like to find another reaction? [Y] ','s');
 fprintf('\n')
 end

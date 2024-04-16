@@ -80,6 +80,7 @@ function arch = make_arch()
     arch = Structure({a,b,c},{ab,bc});
 end
 
+
 function linear_arch()
     arch = make_arch();
     [P,PF]=arch.get_loads();
@@ -87,8 +88,6 @@ function linear_arch()
     k_free = arch.get_stiffness()(1:arch.n_free,1:arch.n_free);
 
     delta_free=k_free\(P+PF)(1:arch.n_free);
-
-    % arch.update_disp(delta_free);
     assert(abs(delta_free(2)-(-2.4383e-4))/abs(2.4383e-4)<1e-4)
 end
 
