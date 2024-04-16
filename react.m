@@ -5,8 +5,8 @@
 
 % calculate the reactions and store them in the array Ps
 
-[P,PF] = strucutre.get_loads();
-F = strucutre.get_internal()
+[P,PF] = structure.get_loads();
+F = structure.get_internal_force();
 
 Ps = F - PF;
 
@@ -17,7 +17,7 @@ while (isempty(i) || (i == 'Y') || (i == 'y'))
 
    rnode = input('enter the supported node you would like displayed ---> ');
    fprintf('\n')
-   node = structure.nodes{rnode}
+   node = structure.nodes{rnode};
 
    if ((node.fixity(1) == 0)&&(node.fixity(2)==0))
       fprintf('\nthis is an unsupported node\n\n');

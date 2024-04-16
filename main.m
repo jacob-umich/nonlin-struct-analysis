@@ -38,10 +38,6 @@ solver
 
 react
 
-% compute member force
-
-memf2
-
 % ask to display the displacements
 
 nodedisp

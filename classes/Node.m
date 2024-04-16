@@ -2,6 +2,7 @@ classdef Node < handle
 	properties(SetAccess=public)
 		dof
 		pos
+		orig_pos
 		loads = [0,0]
 		fixity = [0,0]
 	end
@@ -9,6 +10,7 @@ classdef Node < handle
 	methods
 		function obj = Node(coord)
 			obj.pos=coord;
+			obj.orig_pos = coord;
 		end
 		function set_fixity(obj,fixity)
 			obj.fixity = fixity;
