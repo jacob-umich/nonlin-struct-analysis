@@ -4,19 +4,19 @@
 i = [];
 i = input('Would you like to list the axial force for each member? [Y] ','s');
     if isempty(i)
-       i='Y';
+        i='Y';
     end
-    if (i == 'y' | i == 'Y' )
+    if (i == 'y' || i == 'Y' )
 
-       fprintf('\n\n');
-       fprintf('member            force  \n');
-       fprintf('-----------------------  \n\n');
+        fprintf('\n\n');
+        fprintf('member            force  \n');
+        fprintf('-----------------------  \n\n');
 
-       for j = 1:nbc
+        for j = 1:numel(structure.elements)
+            element = structure.elements{j};
+            fprintf('%g               %g   \n',j,element.get_internal()(3));
 
-         fprintf('%g               %g   \n',j,mforce(3,j));
-
-       end
+        end
 
         fprintf('\n');
     end

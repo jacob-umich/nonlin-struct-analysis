@@ -7,6 +7,7 @@ classdef Element < handle
 		k
 		original_length
 		orig_pos
+		id
 	end
 	methods
 		function obj = Element(node_i,node_j,material)

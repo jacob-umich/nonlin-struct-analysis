@@ -5,6 +5,7 @@ classdef Node < handle
 		orig_pos
 		loads = [0,0]
 		fixity = [0,0]
+		id
 	end
 
 	methods

@@ -10,29 +10,34 @@
 % 	This script file plots the structure
 %
 
-	   clf;
-	   for j=1:nnod
-		 supflag=0;
-		 for j1=1:2
-		    if (supp(j1,j)==1)
-			  	supflag=1;
-		     end
-		  end
-		  if (supflag==0)
-		    plot(coord(1,j),coord(2,j),'o');
-		  else
-		    plot(coord(1,j),coord(2,j),'ro');
-		  end
-		  hold on;
-	   end
-	   for k=1:nbc
-	     i1=idbc(1,k);
-		 i2=idbc(2,k);
-		 xcoor=[coord(1,i1),coord(1,i2)];
-		 ycoor=[coord(2,i1),coord(2,i2)];
-		 plot(xcoor,ycoor,'-c');
-		 hold on;
-	   end
-	   axis('off');
-	   axis('equal');
+	clf;
+	for j=1:numel(structure.nodes)
+		supflag=0;
+		node = structure.nodes{j};
+		if any(structure.nodes{j}.fixity)
+			supflag==1;
+		end
+
+		if (supflag==0)
+			plot(node.pos(1),node.pos(2),'o');
+		else
+			plot(node.pos(1),node.pos(2),'ro');
+		end
+		  	hold on;
+	end
+
+	for k=1:numel(structure.elements)
+		elem = structure.elements{k};
+		node_i=elem.nodes{1};
+		node_j=elem.nodes{2};
+		i1=idbc(1,k);
+		i2=idbc(2,k);
+		xcoor=[node_i.pos(1),node_j.pos(1)];
+		ycoor=[node_i.pos(2),node_j.pos(2)];
+		plot(xcoor,ycoor,'-c');
+		hold on;
+	end
+
+	axis('off');
+	axis('equal');
 

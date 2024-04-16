@@ -10,14 +10,14 @@ fprintf('\n\nnode                displacement\n');
 fprintf('--------------------------------\n\n');
 
     for j = 1:numel(structure.nodes)
-        node = strucutre.nodes{j}
+        node = structure.nodes{j};
         dx = node.pos(1)-node.orig_pos(1);
         dy = node.pos(2)-node.orig_pos(2);
 
 
     fprintf('node %g                        \n',j);
     fprintf('delta x =                   %g   \n',dx);
-    fprintf('delta y                     %g   \n',dy);
+    fprintf('delta y =                   %g   \n',dy);
 
     end
 else
@@ -31,7 +31,7 @@ else
         if ((node_ind > numel(structure.nodes)) | (node_ind < 1))
             fprintf('\n\nthis is an invalid selection\n\n');
         else
-        node = strucutre.nodes{node_ind}
+        node = structure.nodes{node_ind};
         dx = node.pos(1)-node.orig_pos(1);
         dy = node.pos(2)-node.orig_pos(2);
 

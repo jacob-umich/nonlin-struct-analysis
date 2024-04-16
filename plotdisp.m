@@ -12,7 +12,7 @@
 
 % enter the option for plotting the structure
 %
-        i = [];
+	i = [];
 	i=input('Do you want to plot the displaced shape?  Y/N  [Y]:','s');
 	if isempty(i)
 	  i='Y';

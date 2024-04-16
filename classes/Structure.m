@@ -17,6 +17,7 @@ classdef Structure < handle
 				
 			dof_counter = 1;
 			for i=1:numel(obj.nodes)
+				obj.nodes{i}.id=i;
 				if (sum(obj.nodes{i}.fixity)~=0)
 					continue
 				else
@@ -60,6 +61,7 @@ classdef Structure < handle
 
 			% save degree of freedoms for elements
 			for i=1:numel(obj.elements)
+				obj.elements{i}.id=i;
 				obj.elements{i}.get_dofs();
 
 			end 
