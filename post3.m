@@ -27,7 +27,7 @@ end
 %
 %  print the nodal coordinates
 %
-if (i == 'y' | i == 'Y' )
+if (i == 'y' || i == 'Y' )
 	fprintf('          *****  STRUCTURE DEFINITION   *****\n');
 	fprintf('                       COORDINATE               \n');
 	fprintf('JOINT #             X                  Y         \n');
@@ -68,15 +68,14 @@ if (i == 'y' | i == 'Y' )
 	fprintf('-------------------------------------------------------------------\n');
 	for n=1:numel(structure.elements)
 		element = structure.elements{n};
-		fprintf(
-			'  %i         %i      %i     %g  %g   %g\n',
-			n,
-			element.nodes{1}.id,
-			element.nodes{2}.id,
-			element.material.e_base,
-			element.material.area,
-			element.material.moi,
-		);
+		fprintf(...
+			'  %i         %i      %i     %g  %g   %g\n', ...
+			n, ...
+			element.nodes{1}.id, ...
+			element.nodes{2}.id, ...
+			element.material.e_base, ...
+			element.material.area, ...
+			element.material.moi);
 	end
 end
 %

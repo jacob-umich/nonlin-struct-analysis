@@ -19,9 +19,9 @@
 		end
 
 		if (supflag==0)
-			plot(node.pos(1),node.pos(2),'o');
+			plot(node.orig_pos(1),node.orig_pos(2),'o');
 		else
-			plot(node.pos(1),node.pos(2),'ro');
+			plot(node.orig_pos(1),node.orig_pos(2),'ro');
 		end
 		  	hold on;
 	end
@@ -30,10 +30,8 @@
 		elem = structure.elements{k};
 		node_i=elem.nodes{1};
 		node_j=elem.nodes{2};
-		i1=idbc(1,k);
-		i2=idbc(2,k);
-		xcoor=[node_i.pos(1),node_j.pos(1)];
-		ycoor=[node_i.pos(2),node_j.pos(2)];
+		xcoor=[node_i.orig_pos(1),node_j.orig_pos(1)];
+		ycoor=[node_i.orig_pos(2),node_j.orig_pos(2)];
 		plot(xcoor,ycoor,'-c');
 		hold on;
 	end

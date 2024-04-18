@@ -1,4 +1,4 @@
-function delta = nraph(structure)
+function [delta,lambda] = nraph(structure)
     % get loads. PF is loads from fixed end forces
     [P,PF]=structure.get_loads();
     P_total = P+PF;
@@ -55,6 +55,13 @@ function delta = nraph(structure)
             d_lambda=0;
 
         end
+
+        % break loop and send warning if critical point is found
+        if max(abs(R))>1e-3
+            warning("maximum iterations achieved. critical point observed. stopping simulation")
+            break
+        end
+        
         % update accumulated lambda
         lambda = lambda+lambda_i;
 
