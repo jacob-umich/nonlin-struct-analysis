@@ -9,6 +9,8 @@ classdef Structure < handle
 		n_fix
 		n_dof
 		orig_pos
+		delta_hist
+		lambda_hist = [0]
 	end
 	methods
 		function obj = Structure(nodes,elements)
@@ -66,7 +68,7 @@ classdef Structure < handle
 
 			end 
 			obj.n_dof = dof_counter-1;
-			
+			obj.delta_hist = zeros(obj.n_dof,1);
 			% saving original position of structure
 			obj.orig_pos = zeros(obj.n_dof,1);
 
@@ -146,6 +148,11 @@ classdef Structure < handle
 				dof = node.dof;
 				node.pos = reshape(obj.orig_pos(dof),2);
 			end
+		end
+
+		function store_load_disp(obj,delta,lambda)
+			obj.delta_hist = cat(2,obj.delta_hist,delta);
+			obj.lambda_hist = cat(1,obj.lambda_hist,lambda);
 		end
 	end
 end

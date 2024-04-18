@@ -9,7 +9,7 @@ function arch = arch()
     c = Node(c_pos);
     a.set_fixity(a_fix);
     c.set_fixity(c_fix);
-    b.set_load([0,-10]);
+    b.set_load([0,-44000]);
     mat_func = @(strain,e_base) e_base;
     mat = Material(1,29000,10,100,mat_func);
     ab = Element(a,b,mat);

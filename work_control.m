@@ -1,4 +1,4 @@
-function delta = work_control(structure)
+function [delta,lambda] = work_control(structure,track_changes=false)
     % get loads. PF is loads from fixed end forces
     [P,PF]=structure.get_loads();
     P_total = P+PF;
@@ -61,10 +61,21 @@ function delta = work_control(structure)
         end
         % update accumulated lambda
         lambda = lambda+lambda_i;
-
+        if track_changes
+            delta = zeros(structure.n_dof,1);
+            delta(1:structure.n_free)=delta_free;
+            structure.store_load_disp(delta,lambda)
+        end
         % compute dlambda for next increment
         S = (P_total(1:structure.n_free)'*k_orig*P_total(1:structure.n_free))/(P_total(1:structure.n_free)'*k_free*P_total(1:structure.n_free));
-        d_lambda=0.2*S;
+        e = min(eig(k_free));
+        if e<0
+            sign = -1;
+        else
+            sign = 1;
+        end
+
+        d_lambda=sign *0.001*abs(S)^(1/2);
         %stop condition .arbitrarily stopping slightly after post peak response.
         if lambda>=1 || S<-0.5
             break
