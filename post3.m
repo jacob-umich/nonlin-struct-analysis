@@ -88,4 +88,9 @@ plotreg2
 
 plotdisp
 
+% response curve
+if load_deflect
+	plot_response
+end
+
 

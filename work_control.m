@@ -18,8 +18,10 @@ function [delta,lambda] = work_control(structure,track_changes=false)
 
     % initialize displacements to be added to
     delta_free = zeros(structure.n_free,1);
-
+    count = 1;
     while true
+        fprintf("increment %i\n",count)
+        count = count +1;
         % define R for first iteration
         R = zeros(structure.n_free,1);
         lambda_i=0;
@@ -74,10 +76,16 @@ function [delta,lambda] = work_control(structure,track_changes=false)
         else
             sign = 1;
         end
-
-        d_lambda=sign *0.001*abs(S)^(1/2);
+        fprintf("lambda: %f\n",lambda)
+        fprintf("S: %f\n",S)
+        fprintf("e: %f\n",e)
+        d_lambda=sign *0.1*abs(S)^(1/2);
         %stop condition .arbitrarily stopping slightly after post peak response.
-        if lambda>=1 || S<-0.5
+        if lambda>=1 || e<0
+            if e<0
+                warning("Critical point passed. displayed reactions will not show full capacity.")
+                break
+            end
             break
         end
 

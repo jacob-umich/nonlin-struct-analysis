@@ -146,7 +146,7 @@ classdef Structure < handle
 			for i=1:numel(obj.nodes)
 				node = obj.nodes{i};
 				dof = node.dof;
-				node.pos = reshape(obj.orig_pos(dof),2);
+				node.pos = reshape(obj.orig_pos(dof),1,2);
 			end
 		end
 

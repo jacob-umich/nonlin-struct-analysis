@@ -1,4 +1,4 @@
-function [delta,lambda] = nraph(structure)
+function [delta,lambda] = nraph(structure,track_changes=false)
     % get loads. PF is loads from fixed end forces
     [P,PF]=structure.get_loads();
     P_total = P+PF;
@@ -23,6 +23,9 @@ function [delta,lambda] = nraph(structure)
         % define R for first iteration
         R = zeros(structure.n_free,1);
         lambda_i=0;
+
+        % save an old delta for when solution cant converge
+        delta_old=delta_free;
 
         % 50 is an arbitrary stopping point.
         for j=1:50
@@ -57,17 +60,27 @@ function [delta,lambda] = nraph(structure)
         end
 
         % break loop and send warning if critical point is found
-        if max(abs(R))>1e-3
+        if max(abs(R))>=1e-3
             warning("maximum iterations achieved. critical point observed. stopping simulation")
+            fprintf("final lambda: %f\n", lambda)
+            structure.reset_pos()
+            structure.update_disp(delta_old)
             break
         end
         
         % update accumulated lambda
         lambda = lambda+lambda_i;
 
+
+        if track_changes
+            delta = zeros(structure.n_dof,1);
+            delta(1:structure.n_free)=delta_free;
+            structure.store_load_disp(delta,lambda)
+        end
+
         % compute dlambda for next increment
         S = (P_total(1:structure.n_free)'*k_orig*P_total(1:structure.n_free))/(P_total(1:structure.n_free)'*k_free*P_total(1:structure.n_free));
-        d_lambda=0.2*S;
+        d_lambda=0.02*S;
         %stop condition .arbitrarily stopping slightly after post peak response.
         if lambda>=1 || S<-0.5
             break

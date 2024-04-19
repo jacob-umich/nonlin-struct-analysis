@@ -25,8 +25,8 @@ if isempty(i)
 	i='Y';
 end
 if (i == 'y' || i == 'Y' )
-	func = input('enter the filename ---> ','s');
-	structure = eval(func);
+	struct_name = input('enter the filename ---> ','s');
+	structure = eval(struct_name);
 else
 
 	%

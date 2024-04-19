@@ -38,4 +38,7 @@
 
 	axis('off');
 	axis('equal');
+	file_name = sprintf("%s_layout.png",struct_name);
+	print(gcf,file_name,"-dpng","-r720");
+	fprintf("figure saved at %s\n",file_name)
 

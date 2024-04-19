@@ -23,7 +23,7 @@ if (i == 'y' || i == 'Y' )
 	mag = input('enter the magnification of the displacements ---> ');
 
 
-% give the option for plotting on the same graph
+	% give the option for plotting on the same graph
 
 
 	fprintf('\n\nwould you like to plot the displaced and regular')
@@ -44,9 +44,9 @@ if (i == 'y' || i == 'Y' )
 		end
 
 		if (supflag==0)
-			plot(node.pos(1),node.pos(2),'o');
+			plot(node.pos(1)*mag,node.pos(2)*mag,'o');
 		else
-			plot(node.pos(1),node.pos(2),'ro');
+			plot(node.pos(1)*mag,node.pos(2)*mag,'ro');
 		end
 		  	hold on;
 	end
@@ -56,11 +56,15 @@ if (i == 'y' || i == 'Y' )
 		elem = structure.elements{k};
 		node_i=elem.nodes{1};
 		node_j=elem.nodes{2};
-		xcoor=[node_i.pos(1),node_j.pos(1)];
-		ycoor=[node_i.pos(2),node_j.pos(2)];
+		xcoor=[node_i.pos(1)*mag,node_j.pos(1)*mag];
+		ycoor=[node_i.pos(2)*mag,node_j.pos(2)*mag];
 		plot(xcoor,ycoor,'-c');
 		hold on;
 	end
 	axis('off');
 	axis('equal');
+	file_name = sprintf("%s_deformed.png",struct_name);
+	print(gcf,file_name,"-dpng","-r720");
+	fprintf("figure saved at %s\n",file_name)
+	clf
 end
