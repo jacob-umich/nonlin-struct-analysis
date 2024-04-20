@@ -12,11 +12,11 @@ end
 i = [];
 cond=true;
 while (cond)
-    i = input("Which solution method do you want to use?\n[1] Newton Raphson \n[2] Work Control\n[3] Linear  \n  input:");
+    i = input("Which solution method do you want to use?\n[1] Newton Raphson \n[2] Work Control\n[3] Linear \n[4] Arc Control \n  input:");
     if isempty(i)
     i=1;
     end
-    if (i!=1&&i!=2&&i!=3)
+    if (i!=1&&i!=2&&i!=3&&i!=4)
     printf("[ERROR] please input a valid number\n")
     else
     cond=false;
@@ -27,6 +27,8 @@ if (i==1)
     delta_all = nraph(structure,load_deflect);
 elseif (i==2)
     delta_all = work_control(structure,load_deflect);
+elseif (i==4)
+    delta_all = arc_control(structure,load_deflect);
 elseif (i==3)
     [P,PF]=structure.get_loads()
     k_free = structure.get_stiffness()(1:structure.n_free,1:structure.n_free);

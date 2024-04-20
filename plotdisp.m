@@ -12,6 +12,7 @@
 
 % enter the option for plotting the structure
 %
+clf
 i = [];
 i=input('Do you want to plot the displaced shape?  Y/N  [Y]:','s');
 if isempty(i)
@@ -31,7 +32,30 @@ if (i == 'y' || i == 'Y' )
 
 	if ((an == 'Y') || (an == 'y'))
 
-		plotreg2
+		for j=1:numel(structure.nodes)
+			supflag=0;
+			node = structure.nodes{j};
+			if any(structure.nodes{j}.fixity)
+				supflag==1;
+			end
+
+			if (supflag==0)
+				plot(node.orig_pos(1),node.orig_pos(2),Color="#767676",Marker="o");
+			else
+				plot(node.orig_pos(1),node.orig_pos(2),Color="#767676",Marker="^");
+			end
+				hold on;
+		end
+
+		for k=1:numel(structure.elements)
+			elem = structure.elements{k};
+			node_i=elem.nodes{1};
+			node_j=elem.nodes{2};
+			xcoor=[node_i.orig_pos(1),node_j.orig_pos(1)];
+			ycoor=[node_i.orig_pos(2),node_j.orig_pos(2)];
+			plot(xcoor,ycoor,Color="#767676",LineStyle=":");
+			hold on;
+		end
 	else
 		clf
 	end

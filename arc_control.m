@@ -1,4 +1,4 @@
-function [delta,lambda] = work_control(structure,track_changes=false)
+function [delta,lambda] = arc_control(structure,track_changes=false)
     % get loads. PF is loads from fixed end forces
     [P,PF]=structure.get_loads();
     P_total = P+PF;
@@ -26,6 +26,9 @@ function [delta,lambda] = work_control(structure,track_changes=false)
         R = zeros(structure.n_free,1);
         lambda_i=0;
 
+        % getting first delta for arc control
+        delta_free_j_1=k_free\((P_total(1:structure.n_free,1)*d_lambda)+R)(1:structure.n_free);
+        d_lambda_j_1 = d_lambda;
         % 50 is an arbitrary stopping point.
         for j=1:50
 
@@ -56,9 +59,9 @@ function [delta,lambda] = work_control(structure,track_changes=false)
             % compute d_lambda for step j+1
             dDelta_double_bar = (k_free\R(1:structure.n_free));
             dDelta_bar = (k_free\P_total(1:structure.n_free));
-            numerator = P_total(1:structure.n_free)' *dDelta_double_bar;
-            denominator = P_total(1:structure.n_free)'*dDelta_bar;
-            d_lambda=-numerator/denominator;
+            numerator = -delta_free_j_1'*dDelta_double_bar;
+            denominator = delta_free_j_1'*dDelta_bar+d_lambda_j_1;
+            d_lambda=numerator/denominator;
 
         end
         % update accumulated lambda
