@@ -1,4 +1,4 @@
-function [delta,lambda] = work_control(structure,track_changes=false)
+function [delta,lambda] = work_control(structure,track_changes)
     % get loads. PF is loads from fixed end forces
     [P,PF]=structure.get_loads();
     P_total = P+PF;
@@ -11,7 +11,8 @@ function [delta,lambda] = work_control(structure,track_changes=false)
     d_lambda=0.2;
 
     % establising originial stiffness matrix to measure nonlinearity
-    k_orig=structure.get_tan_stiffness()(1:structure.n_free,1:structure.n_free);
+    k_orig=structure.get_tan_stiffness();
+    k_orig = k_orig(1:structure.n_free,1:structure.n_free);
 
     % setting initial stiffness matrix
     k_free=k_orig;
@@ -33,20 +34,24 @@ function [delta,lambda] = work_control(structure,track_changes=false)
             lambda_i=lambda_i+d_lambda;
 
             % compute delta j
-            delta_free_j=k_free\((P_total(1:structure.n_free,1)*d_lambda)+R)(1:structure.n_free);
+            total = ((P_total(1:structure.n_free,1)*d_lambda)+R);
+            delta_free_j=k_free\total(1:structure.n_free);
 
             % get total displacement at step j
             delta_free=delta_free+delta_free_j;
             structure.update_disp(delta_free_j);
 
             % get internal force for step j
-            F = structure.get_internal_force()(1:structure.n_free,1);
+            F = structure.get_internal_force();
+            F = F(1:structure.n_free,1);
 
             % compute residual for step j
-            R=(P_total*(lambda+lambda_i))(1:structure.n_free,1)-F;
+            p = (P_total*(lambda+lambda_i));
+            R=p(1:structure.n_free,1)-F;
 
             % compute stiffness for step j+1
-            k_free= structure.get_tan_stiffness()(1:structure.n_free,1:structure.n_free);
+            k_free= structure.get_tan_stiffness();
+            k_free = k_free(1:structure.n_free,1:structure.n_free);
 
             % stop iteration if residual is small
             if max(abs(R))<1e-3
@@ -95,5 +100,5 @@ function [delta,lambda] = work_control(structure,track_changes=false)
     % end result is displacments. structure object now has new displacments
     delta = zeros(structure.n_dof,1);
     delta(1:structure.n_free)=delta_free;
-endfunction
+end
 
