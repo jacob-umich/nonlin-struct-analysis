@@ -1,6 +1,6 @@
 clf
 i = [];
-i=input('Do you want to plot the load-displacement response of a dof?  Y/N  [Y]:','s');
+i=input('Do you want to plot the force-displacement response of a dof?  Y/N  [Y]:','s');
 if isempty(i)
 	i='Y';
 end
@@ -13,6 +13,9 @@ if (i == 'y' || i == 'Y' )
         hold on
         name = sprintf("DOF %i",i(j));
         plot(structure.delta_hist(i(j),:)',lambdas,'DisplayName',name);
+        title('Force-Displacement Curve');
+        xlabel('Displacement');
+        ylabel('Force');
     end
     legend
     file_name = sprintf("%s_response.png",struct_name);
