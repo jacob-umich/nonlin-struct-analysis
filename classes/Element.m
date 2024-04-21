@@ -96,5 +96,36 @@ classdef Element < handle
 				0,-1,0,1;
 			];
 		end
+		function k_m = get_material_stiffness(obj)
+			py=36*obj.material.area
+			n = [
+				1/py,0;
+				0,0;
+				0,1/py;
+				0,0;
+			]
+			F = obj.get_internal()
+			T = F(3);
+
+			if T>=py
+				factor=1
+			else
+				factor=0
+
+			EA = (obj.material.area) * (obj.material.get_moe(strain))
+			k_p = factor/obj.get_elem_len*[
+				EA,0,,0;
+				0,0,0,0;
+				0,0,EA,0;
+				0,0,0,0;
+			];
+			cur_len = obj.get_elem_len();
+			k_g = T/cur_len*[
+				1,0,-1,0;
+				0,1,0,-1;
+				-1,0,1,0;
+				0,-1,0,1;
+			];
+		end
   	end
 end
