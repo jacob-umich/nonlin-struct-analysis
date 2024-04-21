@@ -1,4 +1,4 @@
-# solves the system using the specified solution method
+% solves the system using the specified solution method
 i = [];
 i=input('Do you want to store load-deflection history?  Y/N  [Y]:','s');
 if isempty(i)
@@ -16,7 +16,7 @@ while (cond)
     if isempty(i)
     i=1;
     end
-    if (i!=1&&i!=2&&i!=3&&i!=4)
+    if (i~=1&&i~=2&&i~=3&&i~=4)
     printf("[ERROR] please input a valid number\n")
     else
     cond=false;
@@ -31,8 +31,10 @@ elseif (i==4)
     delta_all = arc_control(structure,load_deflect);
 elseif (i==3)
     [P,PF]=structure.get_loads()
-    k_free = structure.get_stiffness()(1:structure.n_free,1:structure.n_free);
-    delta_free=k_free\(P+PF)(1:structure.n_free);
+    k_free = structure.get_stiffness()
+    k_free = k_free(1:structure.n_free,1:structure.n_free);
+    Pt = (P+PF)
+    delta_free=k_free\Pt(1:structure.n_free);
     structure.update_disp(delta_free);
 end
 

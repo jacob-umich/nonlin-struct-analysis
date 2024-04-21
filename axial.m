@@ -14,7 +14,8 @@ i = input('Would you like to list the axial force for each member? [Y] ','s');
 
         for j = 1:numel(structure.elements)
             element = structure.elements{j};
-            fprintf('%g               %g   \n',j,element.get_internal()(3));
+            f = element.get_internal()
+            fprintf('%g               %g   \n',j,f(3));
 
         end
 

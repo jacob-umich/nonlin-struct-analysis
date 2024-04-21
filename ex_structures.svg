@@ -7,7 +7,7 @@
    viewBox="0 0 210 297"
    version="1.1"
    id="svg1"
-   inkscape:version="1.2.2 (732a01da63, 2022-12-09)"
+   inkscape:version="1.3 (0e150ed6c4, 2023-07-21)"
    sodipodi:docname="ex_structures.svg"
    xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
    xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
@@ -23,13 +23,13 @@
      inkscape:pagecheckerboard="0"
      inkscape:deskcolor="#d1d1d1"
      inkscape:document-units="mm"
-     inkscape:zoom="1"
-     inkscape:cx="495.99999"
-     inkscape:cy="765.99998"
-     inkscape:window-width="1920"
-     inkscape:window-height="1017"
-     inkscape:window-x="-8"
-     inkscape:window-y="-8"
+     inkscape:zoom="0.5"
+     inkscape:cx="164"
+     inkscape:cy="598"
+     inkscape:window-width="1500"
+     inkscape:window-height="938"
+     inkscape:window-x="-6"
+     inkscape:window-y="-6"
      inkscape:window-maximized="1"
      inkscape:current-layer="layer1"
      showgrid="true" />
@@ -148,7 +148,10 @@
        style="fill:none;stroke:#616161;stroke-width:0.1;stroke-linejoin:round;stroke-dasharray:none;stroke-opacity:1;paint-order:stroke markers fill;stop-color:#000000"
        d="M 7.7278996,95.079588 203.0522,95.079587"
        id="path4348"
-       sodipodi:nodetypes="cc" />
+       sodipodi:nodetypes="cc"
+       inkscape:export-filename="bridge_diag.png"
+       inkscape:export-xdpi="720"
+       inkscape:export-ydpi="720" />
     <path
        style="fill:none;stroke:#616161;stroke-width:0.1;stroke-linejoin:round;stroke-dasharray:none;stroke-opacity:1;paint-order:stroke markers fill;stop-color:#000000"
        d="M 7.7278996,85.099412 203.0522,85.099411"
@@ -268,7 +271,10 @@
     <path
        style="fill:none;stroke:#000000;stroke-width:0.4;stroke-dasharray:none;stroke-opacity:1"
        d="m 94.854018,237.27233 10.000002,-9.99999 10,9.99999"
-       id="path365" />
+       id="path365"
+       inkscape:export-filename="tower_diag.png"
+       inkscape:export-xdpi="720"
+       inkscape:export-ydpi="720" />
     <path
        style="fill:none;stroke:#000000;stroke-width:0.399165;stroke-dasharray:none;stroke-opacity:1"
        d="m 15.037014,95.079588 9.98033,-19.960313 9.980109,9.980149 2e-6,-9.980136 -9.980113,-4e-6"
@@ -2225,7 +2231,10 @@
     <path
        style="fill:none;stroke:#000000;stroke-width:0.399165;stroke-dasharray:none;stroke-opacity:1"
        d="m 15.037014,195.35667 9.98033,-19.96031 9.980109,9.98015 2e-6,-9.98014 -9.980113,0"
-       id="path6" />
+       id="path6"
+       inkscape:export-filename="bridge_2_diag.png"
+       inkscape:export-xdpi="720"
+       inkscape:export-ydpi="720" />
     <path
        style="fill:none;stroke:#000000;stroke-width:0.399165;stroke-dasharray:none;stroke-opacity:1"
        d="m 15.037014,195.35667 c 4.201198,-2.11035 19.960438,-9.98017 19.960438,-9.98017"

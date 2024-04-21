@@ -1,14 +1,12 @@
-function arch = arch()
+function column = column()
     a_pos = [0,0];
-    b_pos = [5,5];
-    c_pos = [10,0];
+    b_pos = [0,5];
     a_fix = [1,1];
-    c_fix = [1,1];
+    b_fix = [1,0];
     a = Node(a_pos);
     b = Node(b_pos);
-    c = Node(c_pos);
     a.set_fixity(a_fix);
-    c.set_fixity(c_fix);
+    b.set_fixity(b_fix);
     b.set_load([0,-56000]);
     mat_func = @(strain,e_base) e_base;
     mat = Material(1,29000,10,100,mat_func);

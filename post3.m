@@ -77,12 +77,12 @@ if (i == 'y' || i == 'Y' )
 			element.material.area, ...
 			element.material.moi);
 	end
+	% give option for plotting the structure
+	
+	plotreg2
 end
 %
 
-% give option for plotting the structure
-
-plotreg2
 
 % give the option for plotting the displaced shape
 

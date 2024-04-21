@@ -4,7 +4,6 @@ classdef Element < handle
 		material
 		loads=0
 		dofs
-		k
 		original_length
 		orig_pos
 		id
@@ -24,7 +23,7 @@ classdef Element < handle
 		end
 		function etran = get_etran(obj)
 			delta = (obj.nodes{2}.pos-obj.nodes{1}.pos);
-			
+
 			phi = atan2(delta(2), delta(1));
 			etran = [ cos(phi) sin(phi) 0 0;
                 -sin(phi) cos(phi) 0 0;
@@ -61,7 +60,7 @@ classdef Element < handle
 			obj.dofs = [
 				obj.nodes{1}.dof(1),
 				obj.nodes{1}.dof(2),
-				obj.nodes{2}.dof(1), 
+				obj.nodes{2}.dof(1),
 				obj.nodes{2}.dof(2)
 			];
 		end
@@ -76,9 +75,8 @@ classdef Element < handle
 			coords = reshape(displ,4,1);
 		end
 		function strain = get_strain(obj)
-			delta = obj.get_coords()-obj.orig_pos;
-			local_pos = obj.get_etran()*delta;
-			strain=(local_pos(3)-local_pos(1))/obj.original_length;
+			cur_len = obj.get_elem_len();
+			strain=(cur_len-obj.original_length)/obj.original_length;
 		end
 		function force = get_internal(obj)
 			strain = obj.get_strain();
@@ -87,7 +85,8 @@ classdef Element < handle
 		end
 
 		function k_g = get_geometric_stiffness(obj)
-			T = obj.get_internal()(3);
+			T = obj.get_internal();
+			T = T(3);
 			cur_len = obj.get_elem_len();
 			k_g = T/cur_len*[
 				1,0,-1,0;
@@ -111,10 +110,11 @@ classdef Element < handle
 				factor=1
 			else
 				factor=0
+      end
 
 			EA = (obj.material.area) * (obj.material.get_moe(strain))
 			k_p = factor/obj.get_elem_len*[
-				EA,0,,0;
+				EA,0,0,0;
 				0,0,0,0;
 				0,0,EA,0;
 				0,0,0,0;

@@ -1,4 +1,4 @@
-function [delta,lambda] = arc_control(structure,track_changes=false)
+function [delta,lambda] = arc_control(structure,track_changes)
     % get loads. PF is loads from fixed end forces
     [P,PF]=structure.get_loads();
     P_total = P+PF;
@@ -7,11 +7,11 @@ function [delta,lambda] = arc_control(structure,track_changes=false)
     lambda=0;
 
     % initial lambda for first increment
-    lambda_i=0;
     d_lambda=0.2;
 
     % establising originial stiffness matrix to measure nonlinearity
-    k_orig=structure.get_tan_stiffness()(1:structure.n_free,1:structure.n_free);
+    k_orig=structure.get_stiffness();
+    k_orig = k_orig(1:structure.n_free,1:structure.n_free);
 
     % setting initial stiffness matrix
     k_free=k_orig;
@@ -27,8 +27,10 @@ function [delta,lambda] = arc_control(structure,track_changes=false)
         lambda_i=0;
 
         % getting first delta for arc control
-        delta_free_j_1=k_free\((P_total(1:structure.n_free,1)*d_lambda)+R)(1:structure.n_free);
+        total = ((P_total(1:structure.n_free,1)*d_lambda)+R);
+        delta_free_j_1=k_free\total(1:structure.n_free);
         d_lambda_j_1 = d_lambda;
+
         % 50 is an arbitrary stopping point.
         for j=1:50
 
@@ -36,25 +38,30 @@ function [delta,lambda] = arc_control(structure,track_changes=false)
             lambda_i=lambda_i+d_lambda;
 
             % compute delta j
-            delta_free_j=k_free\((P_total(1:structure.n_free,1)*d_lambda)+R)(1:structure.n_free);
+            total = ((P_total(1:structure.n_free,1)*d_lambda)+R);
+            delta_free_j=k_free\total(1:structure.n_free);
 
             % get total displacement at step j
             delta_free=delta_free+delta_free_j;
             structure.update_disp(delta_free_j);
 
             % get internal force for step j
-            F = structure.get_internal_force()(1:structure.n_free,1);
+            F = structure.get_internal_force();
+            F = F(1:structure.n_free,1);
 
             % compute residual for step j
-            R=(P_total*(lambda+lambda_i))(1:structure.n_free,1)-F;
-
-            % compute stiffness for step j+1
-            k_free= structure.get_tan_stiffness()(1:structure.n_free,1:structure.n_free);
+            P = (P_total*(lambda+lambda_i));
+            R=P(1:structure.n_free,1)-F;
 
             % stop iteration if residual is small
             if max(abs(R))<1e-3
                 break
             end
+            
+            % compute stiffness for step j+1
+            k_free= structure.get_stiffness();
+            k_free = k_free(1:structure.n_free,1:structure.n_free);
+
 
             % compute d_lambda for step j+1
             dDelta_double_bar = (k_free\R(1:structure.n_free));
@@ -79,7 +86,7 @@ function [delta,lambda] = arc_control(structure,track_changes=false)
         fprintf("lambda: %f\n",lambda)
         fprintf("S: %f\n",S)
         fprintf("e: %f\n",e)
-        d_lambda=sign *0.1*abs(S)^(1/2);
+        d_lambda=sign *0.01*abs(S)^(1/2);
         %stop condition .arbitrarily stopping slightly after post peak response.
         if lambda>=1 || e<0
             if e<0
@@ -98,5 +105,5 @@ function [delta,lambda] = arc_control(structure,track_changes=false)
     % end result is displacments. structure object now has new displacments
     delta = zeros(structure.n_dof,1);
     delta(1:structure.n_free)=delta_free;
-endfunction
+end
 
