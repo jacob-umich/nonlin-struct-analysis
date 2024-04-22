@@ -7,11 +7,10 @@ function [delta,lambda] = nraph(structure,track_changes)
     lambda=0;
 
     % initial lambda for first increment
-    lambda_i=0;
     d_lambda=0.2;
 
     % establising originial stiffness matrix to measure nonlinearity
-    k_orig=structure.get_tan_stiffness()
+    k_orig=structure.get_tan_stiffness();
     k_orig=k_orig(1:structure.n_free,1:structure.n_free);
 
     % setting initial stiffness matrix
@@ -19,8 +18,9 @@ function [delta,lambda] = nraph(structure,track_changes)
 
     % initialize displacements to be added to
     delta_free = zeros(structure.n_free,1);
-
+    count = 1;
     while true
+        count = count +1;
         % define R for first iteration
         R = zeros(structure.n_free,1);
         lambda_i=0;
@@ -85,9 +85,9 @@ function [delta,lambda] = nraph(structure,track_changes)
 
         % compute dlambda for next increment
         S = (P_total(1:structure.n_free)'*k_orig*P_total(1:structure.n_free))/(P_total(1:structure.n_free)'*k_free*P_total(1:structure.n_free));
-        d_lambda=0.02*S;
+        d_lambda=0.001*S;
         %stop condition .arbitrarily stopping slightly after post peak response.
-        if lambda>=1 || S<-0.5
+        if lambda>=1 || S<-0.5||count>2000
             break
         end
 

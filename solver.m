@@ -30,12 +30,15 @@ elseif (i==2)
 elseif (i==4)
     delta_all = arc_control(structure,load_deflect);
 elseif (i==3)
-    [P,PF]=structure.get_loads()
-    k_free = structure.get_stiffness()
+    [P,PF]=structure.get_loads();
+    k_free = structure.get_stiffness();
     k_free = k_free(1:structure.n_free,1:structure.n_free);
-    Pt = (P+PF)
+    Pt = (P+PF);
     delta_free=k_free\Pt(1:structure.n_free);
     structure.update_disp(delta_free);
+    delta = zeros(structure.n_dof,1);
+    delta(1:structure.n_free)=delta_free;
+    structure.store_load_disp(delta,1);
 end
 
 

@@ -80,7 +80,7 @@ classdef Element < handle
 		end
 		function force = get_internal(obj)
 			strain = obj.get_strain();
-			result = strain * (obj.material.area) * (obj.material.get_moe(strain));
+			result = (obj.material.area) * (obj.material.get_stress(strain));
 			force = [-result;0;result;0];
 		end
 

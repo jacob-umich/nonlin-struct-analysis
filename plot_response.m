@@ -13,7 +13,11 @@ if (i == 'y' || i == 'Y' )
         hold on
         name = sprintf("DOF %i",i(j));
         plot(structure.delta_hist(i(j),:)',lambdas,'DisplayName',name);
+
     end
+    xlabel("Displacment(in)")
+    ylabel("\lambda")
+    title("Load-Displacement")
     legend
     file_name = sprintf("%s_response.png",struct_name);
     print(gcf,file_name,"-dpng","-r720");

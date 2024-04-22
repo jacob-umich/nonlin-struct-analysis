@@ -7,7 +7,9 @@ function bridge = bridge_1()
             moe = e_base;
         end
     end
-    mat1 = Material(1,29000,40,210,@mat_func);
+    mat1 = Material(1,29000,20,210,@mat_func);
+    mat2 = Material(1,29000,30,210,@mat_func);
+    mat3 = Material(1,29000,40,210,@mat_func);
 
     nodes={
         Node([0,0]),
@@ -49,36 +51,36 @@ function bridge = bridge_1()
     };
 
     elements = {
-        Element(nodes{1},nodes{2},mat1),
-        Element(nodes{1},nodes{4},mat1),
-        Element(nodes{1},nodes{3},mat1),
-        Element(nodes{2},nodes{3},mat1),
-        Element(nodes{3},nodes{4},mat1), %5
-        Element(nodes{3},nodes{5},mat1),
-        Element(nodes{3},nodes{6},mat1),
-        Element(nodes{4},nodes{5},mat1),
-        Element(nodes{5},nodes{6},mat1),
-        Element(nodes{6},nodes{8},mat1), %10
-        Element(nodes{4},nodes{9},mat1),
-        Element(nodes{5},nodes{9},mat1),
-        Element(nodes{5},nodes{7},mat1),
-        Element(nodes{6},nodes{7},mat1),
-        Element(nodes{7},nodes{9},mat1), %15
-        Element(nodes{7},nodes{10},mat1),
-        Element(nodes{7},nodes{8},mat1),
-        Element(nodes{8},nodes{10},mat1),
-        Element(nodes{8},nodes{13},mat1),
-        Element(nodes{8},nodes{14},mat1), %20
-        Element(nodes{9},nodes{11},mat1),
-        Element(nodes{9},nodes{10},mat1),
-        Element(nodes{10},nodes{11},mat1),
-        Element(nodes{10},nodes{12},mat1),
-        Element(nodes{10},nodes{13},mat1), %25
-        Element(nodes{11},nodes{12},mat1),
-        Element(nodes{12},nodes{13},mat1),
+        Element(nodes{1},nodes{2},mat3),
+        Element(nodes{1},nodes{4},mat3),
+        Element(nodes{1},nodes{3},mat3),
+        Element(nodes{2},nodes{3},mat3),
+        Element(nodes{3},nodes{4},mat3), %5
+        Element(nodes{3},nodes{5},mat3),
+        Element(nodes{3},nodes{6},mat3),
+        Element(nodes{4},nodes{5},mat3),
+        Element(nodes{5},nodes{6},mat3),
+        Element(nodes{6},nodes{8},mat2), %10
+        Element(nodes{4},nodes{9},mat2),
+        Element(nodes{5},nodes{9},mat2),
+        Element(nodes{5},nodes{7},mat2),
+        Element(nodes{6},nodes{7},mat2),
+        Element(nodes{7},nodes{9},mat2), %15
+        Element(nodes{7},nodes{10},mat2),
+        Element(nodes{7},nodes{8},mat2),
+        Element(nodes{8},nodes{10},mat2),
+        Element(nodes{8},nodes{13},mat2),
+        Element(nodes{8},nodes{14},mat2), %20
+        Element(nodes{9},nodes{11},mat2),
+        Element(nodes{9},nodes{10},mat2),
+        Element(nodes{10},nodes{11},mat2),
+        Element(nodes{10},nodes{12},mat2),
+        Element(nodes{10},nodes{13},mat2), %25
+        Element(nodes{11},nodes{12},mat2),
+        Element(nodes{12},nodes{13},mat2),
         Element(nodes{13},nodes{14},mat1),
-        Element(nodes{12},nodes{15},mat1),
-        Element(nodes{13},nodes{15},mat1), %30
+        Element(nodes{12},nodes{15},mat2),
+        Element(nodes{13},nodes{15},mat2), %30
         Element(nodes{14},nodes{15},mat1),
         Element(nodes{14},nodes{16},mat1),
         Element(nodes{15},nodes{17},mat1),
@@ -96,36 +98,36 @@ function bridge = bridge_1()
         Element(nodes{20},nodes{22},mat1), %45
         Element(nodes{21},nodes{23},mat1),
         Element(nodes{22},nodes{23},mat1),
-        Element(nodes{22},nodes{24},mat1),
-        Element(nodes{22},nodes{25},mat1),
-        Element(nodes{25},nodes{26},mat1), %50
+        Element(nodes{22},nodes{24},mat2),
+        Element(nodes{22},nodes{25},mat2),
+        Element(nodes{25},nodes{26},mat2), %50
         Element(nodes{23},nodes{24},mat1),
-        Element(nodes{24},nodes{25},mat1),
-        Element(nodes{23},nodes{29},mat1),
-        Element(nodes{24},nodes{29},mat1),
-        Element(nodes{24},nodes{27},mat1), %55
-        Element(nodes{25},nodes{27},mat1),
-        Element(nodes{26},nodes{27},mat1),
-        Element(nodes{26},nodes{28},mat1),
-        Element(nodes{27},nodes{29},mat1),
-        Element(nodes{27},nodes{28},mat1), %60
-        Element(nodes{29},nodes{30},mat1),
-        Element(nodes{27},nodes{30},mat1),
-        Element(nodes{28},nodes{30},mat1),
-        Element(nodes{28},nodes{32},mat1),
-        Element(nodes{28},nodes{33},mat1), %65
-        Element(nodes{29},nodes{31},mat1),
-        Element(nodes{30},nodes{31},mat1),
-        Element(nodes{31},nodes{32},mat1),
-        Element(nodes{30},nodes{32},mat1),
-        Element(nodes{32},nodes{33},mat1), %70
-        Element(nodes{31},nodes{34},mat1),
-        Element(nodes{32},nodes{34},mat1),
-        Element(nodes{33},nodes{34},mat1),
-        Element(nodes{33},nodes{36},mat1),
-        Element(nodes{34},nodes{35},mat1), %75
-        Element(nodes{34},nodes{36},mat1),
-        Element(nodes{35},nodes{36},mat1),
+        Element(nodes{24},nodes{25},mat2),
+        Element(nodes{23},nodes{29},mat2),
+        Element(nodes{24},nodes{29},mat2),
+        Element(nodes{24},nodes{27},mat2), %55
+        Element(nodes{25},nodes{27},mat2),
+        Element(nodes{26},nodes{27},mat2),
+        Element(nodes{26},nodes{28},mat2),
+        Element(nodes{27},nodes{29},mat2),
+        Element(nodes{27},nodes{28},mat2), %60
+        Element(nodes{29},nodes{30},mat2),
+        Element(nodes{27},nodes{30},mat2),
+        Element(nodes{28},nodes{30},mat2),
+        Element(nodes{28},nodes{32},mat2),
+        Element(nodes{28},nodes{33},mat2), %65
+        Element(nodes{29},nodes{31},mat2),
+        Element(nodes{30},nodes{31},mat2),
+        Element(nodes{31},nodes{32},mat3),
+        Element(nodes{30},nodes{32},mat2),
+        Element(nodes{32},nodes{33},mat3), %70
+        Element(nodes{31},nodes{34},mat3),
+        Element(nodes{32},nodes{34},mat3),
+        Element(nodes{33},nodes{34},mat3),
+        Element(nodes{33},nodes{36},mat3),
+        Element(nodes{34},nodes{35},mat3), %75
+        Element(nodes{34},nodes{36},mat3),
+        Element(nodes{35},nodes{36},mat3),
     };
 
     pinned = [1,1];

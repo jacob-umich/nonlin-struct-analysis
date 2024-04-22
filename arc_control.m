@@ -78,6 +78,7 @@ function [delta,lambda] = arc_control(structure,track_changes)
         d_delta_bar_i = k_free\P_total(1:structure.n_free);
         S = (P_total(1:structure.n_free)'*d_delta_bar_1)/(P_total(1:structure.n_free)'*d_delta_bar_i);
         e = min(eig(k_free));
+        d = min(diag(k_free));
         if e<0
             sign = -1;
         else
@@ -86,9 +87,9 @@ function [delta,lambda] = arc_control(structure,track_changes)
         fprintf("lambda: %f\n",lambda)
         fprintf("S: %f\n",S)
         fprintf("e: %f\n",e)
-        d_lambda=sign *0.01*abs(S)^(1/2);
+        d_lambda=sign *0.001*abs(S)^(1/2);
         %stop condition .arbitrarily stopping slightly after post peak response.
-        if lambda>=1 || e<0
+        if lambda>=1 || e<=0 ||count>2000
             if e<0
                 warning("Critical point passed. displayed reactions will not show full capacity.")
                 break
