@@ -1,6 +1,6 @@
 clf
 i = [];
-i=input('Do you want to plot the load-displacement response of a dof?  Y/N  [Y]:','s');
+i=input('Do you want to plot the force-displacement response of a dof?  Y/N  [Y]:','s');
 if isempty(i)
 	i='Y';
 end
